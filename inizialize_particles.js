@@ -10,6 +10,7 @@ var maxNumParticle = 150000;
 var radius = 100;
 var i = 0;
 var j = 0;
+
 var texture_particlesH = new THREE.TextureLoader().load("Texture/redT.jpg");
 var texture_particlesB = new THREE.TextureLoader().load("Texture/greenT.jpg");
 
@@ -32,11 +33,12 @@ function create_particles(){
     vertices_particlesH = Ver_Mov_high[0];
     movements_particlesH = Ver_Mov_high[1];
 
+    i,j=0;
     // Inizialize Particle B
     var Ver_Mov_Bass = createVertexMovementsParticlesB(particleCountB, vertices_particlesB, movements_particlesB);
     vertices_particlesB = Ver_Mov_Bass[0];
     movements_particlesB = Ver_Mov_Bass[1];
-
+    i,j=0;
 
     //Binding buffers to the shaders
     particleGeometry_H.addAttribute('position', new THREE.BufferAttribute(vertices_particlesH, 3));
