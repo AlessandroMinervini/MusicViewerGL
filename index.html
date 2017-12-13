@@ -1,0 +1,150 @@
+<html>
+	<head>
+		<title>Graphics 3D</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+		<script src="jquery.min.js"></script>
+	</head>
+	<body>
+
+		<script type="x-shader/x-vertex" id="vertex_particlesH">
+
+			attribute vec3 movements;
+
+			uniform vec3 customColor;
+			uniform float pointDim;
+			uniform int frequency[ 512 ];
+
+			varying vec4  vColor;
+
+			highp float rand(vec2 co)
+			{
+			    highp float a = 12.9898;
+			    highp float b = 78.233;
+			    highp float c = 43758.5453;
+			    highp float dt= dot(co.xy ,vec2(a,b));
+			    highp float sn= mod(dt,3.14);
+			    return fract(sin(sn) * c);
+			}
+
+			void main(){
+
+				float x = movements.x;
+				float h = movements.y;
+				float z = movements.z;
+
+				int index = int(floor(sqrt((x*x)+(z*z))));
+
+				vec3 p = position;
+
+				float randf1 = float(index + frequency[int(max(float(index-10), 0.0))]);
+				float randf2 = float(index - frequency[int(min(float(index+10), 511.0))]);
+
+				float s = rand(vec2(randf1, randf2)) * 6.0 - 3.0;
+
+				float ratio = 0.8;
+
+				p.x = x;
+				p.y = ratio * (float(frequency[index]) + s) + (1.0 - ratio) * (p.y);
+				p.z = z;
+
+				vec4 mvPosition = modelViewMatrix * vec4( p, 1.0 );
+				gl_PointSize = pointDim * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
+				gl_Position = projectionMatrix * mvPosition;
+				vColor = vec4( customColor, 0.5 );
+
+			}
+
+		</script>
+
+
+		<script type="x-shader/x-vertex" id="vertex_particlesB">
+
+			attribute vec3 movements;
+
+			uniform vec3 customColor;
+			uniform float pointDim;
+			uniform int frequency[ 512 ];
+
+			varying vec4 vColor;
+
+			highp float rand(vec2 co)
+			{
+			    highp float a = 12.9898;
+			    highp float b = 78.233;
+			    highp float c = 43758.5453;
+			    highp float dt= dot(co.xy ,vec2(a,b));
+			    highp float sn= mod(dt,3.14);
+			    return fract(sin(sn) * c);
+			}
+
+			void main(){
+				float x = movements.x;
+				float h = movements.y;
+				float z = movements.z;
+
+
+				int index = int(floor(sqrt((x*x)+(z*z))));
+
+				vec3 p = position;
+
+				float randf1 = float(index + frequency[int(max(float(index-10), 0.0))]);
+				float randf2 = float(index - frequency[int(min(float(index+10), 511.0))]);
+
+				float s = rand(vec2(randf1, randf2)) * 6.0 - 3.0;
+
+				float ratio = 0.8;
+
+				p.x = x;
+				p.y = ratio * (float(frequency[index]) + s) + (1.0 - ratio) * (p.y);
+				p.z = z;
+
+				vec4 mvPosition = modelViewMatrix * vec4( p, 1.0 );
+				gl_PointSize = pointDim * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
+				gl_Position = projectionMatrix * mvPosition;
+				vColor = vec4( customColor, 0.5 );
+
+			}
+
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragment_particles">
+
+			uniform sampler2D texture_sampler;
+			uniform float opacity;
+			varying vec4 vColor;
+
+
+			void main(){
+
+				vec2 circCoord = 2.0 * gl_PointCoord - 1.0;
+				if (dot(circCoord, circCoord) > 1.0) {
+					discard;
+				}
+
+				if(opacity == 0.0){
+					discard;
+				} else {
+					gl_FragColor = vColor;
+					gl_FragColor = vColor*texture2D(texture_sampler, gl_PointCoord);
+					gl_FragColor.a = opacity;
+				}
+
+			}
+
+		</script>
+		<script src="3js/three.js"></script>
+		<script src="3js/three.min.js"></script>
+		<script type="text/javascript" src="DAT.GUI.min.js"></script>
+
+		<audio id="signal" src="sounds/kill.mp3" autoplay="autoplay"></audio>
+
+		<script src="orbit_controls.js"></script>
+		<script src="scene.js"></script>
+		<script src="inizialize_particles.js"></script>
+		<script src="render.js"></script>
+		<script src="js/audio_script.js"></script>
+	</body>
+</html>
