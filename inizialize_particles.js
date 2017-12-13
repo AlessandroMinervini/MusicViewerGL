@@ -31,16 +31,13 @@ function create_particles(){
     var Ver_Mov_high = createVertexMovementsParticlesH(particleCountH, vertices_particlesH, movements_particlesH);
     vertices_particlesH = Ver_Mov_high[0];
     movements_particlesH = Ver_Mov_high[1];
-    i=0;
-    j=0;
+
     // Inizialize Particle B
     var Ver_Mov_Bass = createVertexMovementsParticlesB(particleCountB, vertices_particlesB, movements_particlesB);
     vertices_particlesB = Ver_Mov_Bass[0];
     movements_particlesB = Ver_Mov_Bass[1];
 
 
-    i=0;
-    j=0;
     //Binding buffers to the shaders
     particleGeometry_H.addAttribute('position', new THREE.BufferAttribute(vertices_particlesH, 3));
     particleGeometry_H.addAttribute('movements', new THREE.BufferAttribute(movements_particlesH, 3));
