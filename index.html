@@ -1,17 +1,19 @@
 <html>
-	<head>
-		<title>Graphics 3D</title>
-		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-		</style>
-		<script src="jquery.min.js"></script>
-	</head>
-	<body>
+<head>
+	<title>Graphics 3D</title>
+	<style>
+		body { margin: 0; }
+		canvas { width: 100%; height: 100% }
+	</style>
+	<script src="jquery.min.js"></script>
+</head>
+<body>
 
-		<script type="x-shader/x-vertex" id="vertex_particlesH">
+<script type="x-shader/x-vertex" id="vertex_particlesH">
 
 			attribute vec3 movements;
+			attribute float customSize;
+
 
 			uniform vec3 customColor;
 			uniform float pointDim;
@@ -51,7 +53,7 @@
 				p.z = z;
 
 				vec4 mvPosition = modelViewMatrix * vec4( p, 1.0 );
-				gl_PointSize = pointDim * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
+				gl_PointSize = customSize * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
 				gl_Position = projectionMatrix * mvPosition;
 				vColor = vec4( customColor, 0.5 );
 
@@ -60,9 +62,10 @@
 		</script>
 
 
-		<script type="x-shader/x-vertex" id="vertex_particlesB">
+<script type="x-shader/x-vertex" id="vertex_particlesB">
 
 			attribute vec3 movements;
+			attribute float customSize;
 
 			uniform vec3 customColor;
 			uniform float pointDim;
@@ -102,7 +105,7 @@
 				p.z = z;
 
 				vec4 mvPosition = modelViewMatrix * vec4( p, 1.0 );
-				gl_PointSize = pointDim * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
+				gl_PointSize = customSize * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
 				gl_Position = projectionMatrix * mvPosition;
 				vColor = vec4( customColor, 0.5 );
 
@@ -110,7 +113,7 @@
 
 		</script>
 
-		<script type="x-shader/x-fragment" id="fragment_particles">
+<script type="x-shader/x-fragment" id="fragment_particles">
 
 			uniform sampler2D texture_sampler;
 			uniform float opacity;
@@ -135,16 +138,16 @@
 			}
 
 		</script>
-		<script src="3js/three.js"></script>
-		<script src="3js/three.min.js"></script>
-		<script type="text/javascript" src="DAT.GUI.min.js"></script>
+<script src="3js/three.js"></script>
+<script src="3js/three.min.js"></script>
+<script type="text/javascript" src="DAT.GUI.min.js"></script>
 
-		<audio id="signal" src="sounds/kill.mp3" autoplay="autoplay"></audio>
+<audio id="signal" src="sounds/kill.mp3" autoplay="autoplay"></audio>
 
-		<script src="orbit_controls.js"></script>
-		<script src="scene.js"></script>
-		<script src="inizialize_particles.js"></script>
-		<script src="render.js"></script>
-		<script src="js/audio_script.js"></script>
-	</body>
+<script src="orbit_controls.js"></script>
+<script src="scene.js"></script>
+<script src="inizialize_particles.js"></script>
+<script src="render.js"></script>
+<script src="js/audio_script.js"></script>
+</body>
 </html>
