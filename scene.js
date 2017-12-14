@@ -23,4 +23,4 @@ audioSrc.connect(audioCtx.destination);
 // frequencyBinCount tells you how many values you'll receive from the analyser
 analyser.fftSize = 1024;
 var bufferLength = analyser.frequencyBinCount;
-var frequencyData = new Uint8Array(bufferLength); 
+var frequencyData = new Uint8Array(bufferLength);

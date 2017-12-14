@@ -13,13 +13,12 @@
 
 			attribute vec3 movements;
 			attribute float customSize;
+			attribute vec3 customColor;
 
-
-			uniform vec3 customColor;
 			uniform float pointDim;
 			uniform int frequency[ 512 ];
 
-			varying vec4  vColor;
+			varying vec4 vColor;
 
 			highp float rand(vec2 co)
 			{
@@ -52,10 +51,20 @@
 				p.y = ratio * (float(frequency[index]) + s) + (1.0 - ratio) * (p.y);
 				p.z = z;
 
+				float ma = float(frequency[0]);
+				if(float(frequency[index])/ma <= 0.2 || float(frequency[index])==0.0){
+					vColor = vec4(customColor,0.7);
+				}else{
+					vColor.x = customColor.x + 0.5*log2(float(frequency[index])/ma);
+					vColor.y = customColor.y + 0.5*log2(float(frequency[index])/ma);
+					vColor.z = customColor.z + 0.3*log2(float(frequency[index])/ma);
+					vColor.a = 0.7;
+				}
+
+
 				vec4 mvPosition = modelViewMatrix * vec4( p, 1.0 );
 				gl_PointSize = customSize * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
 				gl_Position = projectionMatrix * mvPosition;
-				vColor = vec4( customColor, 0.5 );
 
 			}
 
@@ -66,8 +75,8 @@
 
 			attribute vec3 movements;
 			attribute float customSize;
+			attribute vec3 customColor;
 
-			uniform vec3 customColor;
 			uniform float pointDim;
 			uniform int frequency[ 512 ];
 
@@ -104,11 +113,19 @@
 				p.y = ratio * (float(frequency[index]) + s) + (1.0 - ratio) * (p.y);
 				p.z = z;
 
+				float ma = float(frequency[0]);
+				if(float(frequency[index])==0.0){
+					vColor = vec4(customColor,0.7);
+				}else{
+					vColor.x = customColor.x + (-log2(float(frequency[index])/ma));
+					vColor.y = customColor.y; //+ customColor.y*log2(float(frequency[index])/ma);
+					vColor.z = customColor.z; //+ customColor.z*log2(float(frequency[index])/ma);
+					vColor.a = 0.7;
+				}
+
 				vec4 mvPosition = modelViewMatrix * vec4( p, 1.0 );
 				gl_PointSize = customSize * ( 300.0 / -mvPosition.z ) + mod(randf1, 4.0);
 				gl_Position = projectionMatrix * mvPosition;
-				vColor = vec4( customColor, 0.5 );
-
 			}
 
 		</script>
@@ -142,7 +159,7 @@
 <script src="3js/three.min.js"></script>
 <script type="text/javascript" src="DAT.GUI.min.js"></script>
 
-<audio id="signal" src="sounds/kill.mp3" autoplay="autoplay"></audio>
+<audio id="signal" src="sounds/kill.mp3" autoplay="autoplay" loop="true"></audio>
 
 <script src="orbit_controls.js"></script>
 <script src="scene.js"></script>
