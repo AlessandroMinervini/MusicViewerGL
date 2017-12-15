@@ -5,9 +5,9 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-camera.position.z = 500;
-camera.position.y = 100;
-
+camera.position.z = 0;
+camera.position.y = 300;
+camera.position.x = 170;
 
 //------------------------ ----------Load the sound and setup the analyser--------------------------------------------
 var AudioContext = window.AudioContext || window.webkitAudioContext;

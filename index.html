@@ -51,13 +51,15 @@
 				p.y = ratio * (float(frequency[index]) + s) + (1.0 - ratio) * (p.y);
 				p.z = z;
 
-				float ma = float(frequency[0]);
-				if(float(frequency[index])/ma <= 0.2 || float(frequency[index])==0.0){
+                int i;
+                float ma = 0.0;
+                ma = float(frequency[0]);
+				if(float(frequency[index]) == 0.0){
 					vColor = vec4(customColor,0.7);
 				}else{
-					vColor.x = customColor.x + 0.5*log2(float(frequency[index])/ma);
-					vColor.y = customColor.y + 0.5*log2(float(frequency[index])/ma);
-					vColor.z = customColor.z + 0.3*log2(float(frequency[index])/ma);
+					vColor.x = customColor.x + (-log2(float(frequency[index])/ma));
+					vColor.y = customColor.y; //+ log2(float(x));
+					vColor.z = customColor.z; //+ log2(float(z));
 					vColor.a = 0.7;
 				}
 
@@ -118,8 +120,8 @@
 					vColor = vec4(customColor,0.7);
 				}else{
 					vColor.x = customColor.x + (-log2(float(frequency[index])/ma));
-					vColor.y = customColor.y; //+ customColor.y*log2(float(frequency[index])/ma);
-					vColor.z = customColor.z; //+ customColor.z*log2(float(frequency[index])/ma);
+					vColor.y = customColor.y;
+					vColor.z = customColor.z;
 					vColor.a = 0.7;
 				}
 
@@ -159,7 +161,7 @@
 <script src="3js/three.min.js"></script>
 <script type="text/javascript" src="DAT.GUI.min.js"></script>
 
-<audio id="signal" src="sounds/kill.mp3" autoplay="autoplay" loop="true"></audio>
+<audio id="signal" src="sounds/W.mp3" autoplay="autoplay" loop="true"></audio>
 
 <script src="orbit_controls.js"></script>
 <script src="scene.js"></script>

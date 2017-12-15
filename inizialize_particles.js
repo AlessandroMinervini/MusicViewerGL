@@ -1,20 +1,20 @@
 // Create Particles
 
 // Parameters Particles
-var particle_opacity = 0.7;
+var particle_opacity = 0.98;
 var particleCountH = 80000;
 var particleCountB = 80000;
 var minNumParticle = 500;
 var maxNumParticle = 150000;
 var sizeH=2;
 var sizeB=2;
-var RGB_H = [0.5, 0.2, 0.7];
-var RGB_B = [0, 1, 0];
+var RGB_H = [0.21, 0.33, 0.57];
+var RGB_B = [0.34, 0.76,0 ];
 var radius = 100;
 var i = 0;
 var j = 0;
 var k = 0;
-var texture_particlesH = new THREE.TextureLoader().load("Texture/text2.png");
+var texture_particlesH = new THREE.TextureLoader().load("Texture/flare.png");
 var texture_particlesB = new THREE.TextureLoader().load("Texture/flare.png");
 
 function create_particles(){
