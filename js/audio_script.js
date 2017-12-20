@@ -8,9 +8,11 @@ function onKeyDown(event) {
             if (play) {
                 audio.pause();
                 play = false;
+                rot = false;
             } else {
                 audio.play();
-                play = true
+                play = true;
+                rot = true;
             }
             break;
     }
